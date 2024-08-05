@@ -1,5 +1,6 @@
 defmodule BlogAppWeb.Router do
   use BlogAppWeb, :router
+  use Pow.Phoenix.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -8,10 +9,17 @@ defmodule BlogAppWeb.Router do
     plug :put_root_layout, html: {BlogAppWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Pow.Plug.Session, otp_app: :blog_app
   end
 
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  scope "/" do
+    pipe_through :browser
+
+    pow_routes()
   end
 
   scope "/", BlogAppWeb do

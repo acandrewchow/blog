@@ -47,5 +47,6 @@ defmodule BlogAppWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+  plug Pow.Plug.Session, otp_app: :blog_app
   plug BlogAppWeb.Router
 end
